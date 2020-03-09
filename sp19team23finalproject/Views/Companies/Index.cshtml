@@ -1,0 +1,70 @@
+﻿@model IEnumerable<sp19team23finalproject.Models.Company>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Companies</h2>
+
+@*search bar for companies*@
+<form asp-action="Index" asp-controller="Companies" method="get">
+    <p class="form-group">
+        Search: <input type="text" name="CompanySearch" class="form-control" /><br />
+        <button type="submit" value="Filter" class="btn btn-secondary">Quick Company Search</button>
+        <a asp-action="CompanyDetailedSearch" class="btn btn-success">Detailed Company Search</a>
+        <a asp-action="Index" class="btn btn-danger">Show All</a>
+    </p>
+</form>
+
+@if (User.IsInRole("CSO"))
+{
+<p>
+    <a asp-action="Create">Add New Company</a>
+</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Industry)
+            </th>
+           
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Industry)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CompanyID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CompanyID">Details</a> |
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

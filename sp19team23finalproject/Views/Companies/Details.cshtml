@@ -1,0 +1,76 @@
+﻿@model sp19team23finalproject.Models.Company
+@using sp19team23finalproject.Models
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Industry)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Industry)
+        </dd>
+    </dl>
+</div>
+<h5>Positions for this Company</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Position</th>
+    </tr>
+    @foreach (Position p in Model.Positions)
+    {
+        <tr>
+            <td>@p.Title</td>
+        </tr>
+    }
+</table>
+<a asp-action="Create" asp-controller="Applications" class="btn btn-primary">Apply For Available Positions</a>
+<h5> </h5>
+
+<h5>Interviews for this Company</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Interview</th>
+    </tr>
+    @foreach (Interview i in Model.Interviews)
+    {
+        <tr>
+            <td>@i.InterviewDate</td>
+        </tr>
+        <tr>
+            <td>@i.InterviewTime</td>
+        </tr>
+        <tr>
+            <td>@i.InterviewRoom</td>
+        </tr>
+    }
+</table>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CompanyID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

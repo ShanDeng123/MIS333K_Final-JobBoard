@@ -1,0 +1,92 @@
+﻿@model IEnumerable<sp19team23finalproject.Models.Application>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Applications</h2>
+
+@if (User.IsInRole("Student"))
+{
+    <p>
+        <a asp-action="Create">Create New Application</a>
+    </p>
+}
+@if (User.IsInRole("Recruiter") || User.IsInRole("CSO"))
+{
+    <p>
+        <a asp-action="CreateStudent">Create New Application</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accepted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position.Company.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accepted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.Company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+
+            @if (User.IsInRole("Student"))
+            {
+
+                @if (item.Position.Deadline > sp19team23finalproject.Controllers.HomeController.current_time)
+                {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ApplicationID">Withdraw</a>
+                </td>
+                }
+            }
+
+            @if (User.IsInRole("Recruiter")|| User.IsInRole("CSO"))
+            {
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ApplicationID">Decide</a>
+                </td>
+
+            }
+
+        </tr>
+        }
+    </tbody>
+</table>

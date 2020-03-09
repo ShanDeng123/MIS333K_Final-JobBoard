@@ -1,0 +1,39 @@
+﻿@model sp19team23finalproject.Models.Position
+
+
+@{
+    ViewData["Title"] = "To Be Interviewed";
+}
+
+<h2>Students Who Applied</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PickStudents">
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Students</th>
+                </tr>
+                @foreach (var stud in ViewBag.Applied)
+                {
+                    <tr>
+                        <td>@stud.FirstName</td>
+                    </tr>
+                }
+
+            </table>
+            <div class="form-group">
+                <label class="control-label">Select Students for Interviews:</label>
+                @Html.ListBox("SelectedStudents", (MultiSelectList)ViewBag.AllStudents, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+   </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,156 @@
+﻿@*@using sp19team23finalproject.Models;
+    @model EditViewModel*@
+
+@model sp19team23finalproject.Models.AppUser
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@{
+    ViewBag.Title = "Edit Student";
+}
+
+@*@using (Html.BeginForm("EditStudent", "Account"))
+    {
+        @Html.EditorFor(model => model.FirstName)
+        @Html.EditorFor(model => model.LastName)
+        @Html.EditorFor(model => model.Email)
+
+        <input type="submit" value="Save" />
+    }*@
+
+
+@using (Html.BeginForm("EditStudent", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Edit account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <h4>@ViewBag.Error</h4>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    @*TODO: Add code for additional fields required for login*@
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    //TODO: set this up right as a drop down or select list
+    <div class="form-group">
+        <label class="control-label">Major:</label>
+        @Html.DropDownList("SelectedMajor", (SelectList)ViewBag.AllMajors, new { @class = "form-control" })
+    </div>
+    //TODO: set this up as radio buttons, currently is a drop down
+    <div class="form-group">
+        <label class="control-label">Position Type:</label><br />
+        <label class="radio">@Html.RadioButton("SelectedType", sp19team23finalproject.Controllers.PositionDuration.I) Internships Only</label><br />
+        <label class="radio">@Html.RadioButton("SelectedType", sp19team23finalproject.Controllers.PositionDuration.FT) Full Time Only</label>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GradDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.GradDate, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GPA, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.GPA, new { @class = "form-control" })
+        </div>
+    </div>
+
+    @if (User.IsInRole("CSO"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.ActiveStatus, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => m.ActiveStatus, new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+}
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*@model sp19team23finalproject.Models.AppUser
+
+    @{
+        ViewData["Title"] = "Edit My Profile";
+    }
+
+    <h2>Edit</h2>
+
+    <h4>User Profile</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditStudent">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="GPA" class="control-label"></label>
+                    <input asp-for="GPA" class="form-control" />
+                    <span asp-validation-for="GPA" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Position Type:</label>
+                    @Html.DropDownList("SelectedPositionType", (SelectList)ViewBag.YourEnums, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="GradDate" class="control-label"></label>
+                    <input asp-for="GradDate" class="form-control" />
+                    <span asp-validation-for="GradDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Choose a Major:</label>
+                    @Html.DropDownList("SelectedMajor", (SelectList)ViewBag.AllMajors, new { @class = "form-control" })
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@

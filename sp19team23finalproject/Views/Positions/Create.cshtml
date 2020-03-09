@@ -1,0 +1,62 @@
+﻿@using sp19team23finalproject.Controllers
+@model sp19team23finalproject.Models.Position
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Position</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                       
+<div>
+    <label asp-for="Title" class="control-label"></label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+           
+            <div class="form-group">
+                <label class="control-label">Position Type:</label><br />
+                <label class="radio">@Html.RadioButton("PositionType", PositionDuration.I, true) Internships Only</label><br />
+                <label class="radio">@Html.RadioButton("PositionType", PositionDuration.FT) Full Time Only</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Deadline" class="control-label"></label>
+                <input asp-for="Deadline" class="form-control" />
+                <span asp-validation-for="Deadline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company" class="control-label">Company:</label>
+                @Html.DropDownList("SelectedCompany", (SelectList)ViewBag.AllCompanies, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="PositionMajors" class="control-label">Select Majors:</label>
+                @Html.ListBox("SelectedMajors", (MultiSelectList)ViewBag.AllMajors, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

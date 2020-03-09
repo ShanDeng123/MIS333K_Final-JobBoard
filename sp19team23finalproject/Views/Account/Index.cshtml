@@ -1,0 +1,54 @@
+﻿@using sp19team23finalproject.Models
+@model IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>User Name:</dt>
+        <dd>@Model.UserName</dd>
+
+        <dt>Email:</dt>
+        <dd>@Model.Email</dd>
+
+
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+        {
+            @Html.ActionLink("Change your password", "ChangePassword")
+    }
+            ]
+
+        </dd>
+
+        <dt>Edit Profile:</dt>
+        <dd>
+            [
+            @if ((Model.HasPassword) & (User.IsInRole("Student")))
+        {
+            <a asp-action="EditStudent" asp-controller="Account" asp-route-id="@Model.UserID">Edit</a>
+    }
+            @if ((Model.HasPassword) & (User.IsInRole("Recruiter")))
+        {
+            <a asp-action="EditRecruiter" asp-controller="Account" asp-route-id="@Model.UserID">Edit</a>
+    }
+            @if ((Model.HasPassword) & (User.IsInRole("CSO")))
+        {
+            <a asp-action="EditCSO" asp-controller="Account" asp-route-id="@Model.UserID">Edit</a>
+    }
+            ]
+
+        </dd>
+    </dl>
+   
+
+   
+</div>
+<hr />

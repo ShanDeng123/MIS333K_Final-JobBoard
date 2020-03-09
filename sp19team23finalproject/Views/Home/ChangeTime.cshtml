@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Change Time";
+}
+
+<h2>Alter Space-Time</h2>
+<p>
+    Current Time: @ViewBag.timerightnow
+</p>
+
+<form asp-action="ChangeTime" method="post">
+    Change Time; Mess with Reality: <input type="date" name="enterred_time" value="@ViewBag.timerightnow"><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

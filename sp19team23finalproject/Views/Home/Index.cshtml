@@ -1,0 +1,96 @@
+@model IEnumerable<sp19team23finalproject.Models.AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Bevo's Career Services</h2>
+
+@if (User.IsInRole("Student"))
+{
+    <form asp-action="Index" method="get">
+        <p class="form-group">
+            <a asp-action="Index" asp-controller="Positions" class="btn btn-primary">Available Positions</a>
+            <a asp-action="Index" asp-controller="Companies" class="btn btn-success">Companies</a>
+            <a asp-action="Index" asp-controller="Applications" class="btn btn-danger">Your Applications</a>
+            <a asp-action="Index" asp-controller="Interviews" class="btn btn-primary">Your Interviews</a>
+            <a asp-action="Index" asp-controller="Account" class="btn btn-success">Your Account</a>
+            <a asp-action="ChangeTime" asp-controller="Home" class="btn btn-danger">Change Time!</a>
+        </p>
+    </form>
+}
+
+
+@if (User.IsInRole("Recruiter") || User.IsInRole("CSO"))
+{
+
+    @Html.ActionLink("Change Time", "ChangeTime", "Home", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create Student", "CreateStudent", "Account", null, new { @class = "btn btn-danger" })
+
+    <form asp-action="Index" asp-controller="Home" method="get">
+        <p class="form-group">
+            Search: <input type="text" name="UserSearchString" class="form-control" /><br />
+            <button type="submit" value="Filter" class="btn btn-secondary">Quick Student Search</button>
+            <a asp-action="StudentDetailedSearch" class="btn btn-success">Detailed Student Search</a>
+        </p>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GPA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Major.MajorName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GradDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PositionType)
+                </th>
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GPA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Major.MajorName)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.GradDate)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.PositionType)
+                    </th>
+
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="EditStudent" asp-controller="Account" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}

@@ -1,0 +1,32 @@
+﻿@using sp19team23finalproject.Controllers
+@{
+    ViewBag.Title = "Detailed Search";
+}
+
+<h2>Detailed Search</h2>
+<form asp-action="DisplaySearchResults" asp-controller="Companies" method="get">
+    <div class="form-group">
+        <label>Search Company Names:</label>
+        <input name="CompanyNameSearch" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Location:</label>
+        <input name="LocationSearch" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Industry:</label>
+        <input name="Industry" class="form-control" />
+    </div>
+
+
+
+    <div class="form-group">
+        <label>Filter by Position Type:</label><br />
+        <label class="radio">@Html.RadioButton("SelectedPositionType", PositionDuration.All, true) All Positions</label><br />
+        <label class="radio">@Html.RadioButton("SelectedPositionType", PositionDuration.FT) Full Time Only</label><br />
+        <label class="radio">@Html.RadioButton("SelectedPositionType", PositionDuration.I) Internships Only</label><br />
+    </div>
+
+    <button type="submit" class="btn btn-danger">Search</button>
+
+</form>

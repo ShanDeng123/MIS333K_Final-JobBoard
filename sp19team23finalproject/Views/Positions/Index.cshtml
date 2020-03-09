@@ -1,0 +1,110 @@
+@model IEnumerable<sp19team23finalproject.Models.Position>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*title of our position page*@
+<h2>Positions</h2>
+
+@*quick search in home page*@
+<form asp-action="Index" asp-controller="Positions" method="get">
+    <p class="form-group">
+        <a asp-action="DetailedSearch" class="btn btn-success">Detailed Search</a>
+        <a asp-action="Index" class="btn btn-danger">Show All</a>
+    </p>
+</form>
+<p>
+    Displaying @ViewBag.SelectedPositionCount out of @ViewBag.AllPositionCount Positions
+</p>
+@if ((User.IsInRole("Recruiter") || (User.IsInRole("CSO"))))
+{
+    <p>
+            <a asp-action="Create">Create New Position</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company.Industry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionMajors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.Industry)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @foreach (var major in item.PositionMajors)
+            {
+                @Html.DisplayFor(itemMajor => major.Major.MajorName) <br>
+            }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PositionID">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.PositionID">Details</a>
+
+                @if (User.IsInRole("Student"))
+                {
+
+                <a asp-action="Create" asp-controller="Applications" asp-route-orderID="@item.Applications">Apply</a>
+                }
+
+            @if (User.IsInRole("CSO") || User.IsInRole("Recruiter"))
+            {
+
+                @if (item.Deadline < sp19team23finalproject.Controllers.HomeController.current_time)
+                {
+                <a asp-action="PickStudents" asp-route-id="@item.PositionID">Pick Students</a>
+                }
+            }
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,67 @@
+﻿@using sp19team23finalproject.Controllers
+@model sp19team23finalproject.Models.Interview
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Interview</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InterviewDate" class="control-label"></label>
+                <input asp-for="InterviewDate" class="form-control" />
+                <span asp-validation-for="InterviewDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Interview Time:</label><br />
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time8, true) 8:00 AM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time9) 9:00 AM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time10) 10:00 AM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time11) 11:00 AM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time1) 1:00 PM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time2) 2:00 PM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time3) 3:00 PM</label>
+                <label class="radio">@Html.RadioButton("InterivewTime", InterviewTime.time4) 4:00 PM</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterviewRoom" class="control-label"></label>
+                @Html.DropDownListFor(model => model.InterviewRoom, new SelectList(
+                  new List<Object>{ 
+                       new { value = 1 , text = "Room 1"  },
+                       new { value = 2 , text = "Room 2" },
+                       new { value = 3 , text = "Room 3"},
+                       new { value = 4 , text = "Room 4"}
+                    },
+                  "value",
+                  "text",
+                   2))
+            </div>
+            <div class="form-group">
+                <label class="control-label">Recruiter:</label>
+                @Html.DropDownList("SelectedRecruiter", (SelectList)ViewBag.AllRecruiters, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Position:</label>
+                @Html.DropDownList("SelectedPosition", (SelectList)ViewBag.AllPositions, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Company:</label>
+                @Html.DropDownList("SelectedCompany", (SelectList)ViewBag.AllCompanies, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

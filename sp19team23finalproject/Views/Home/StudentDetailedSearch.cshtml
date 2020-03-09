@@ -1,0 +1,42 @@
+﻿@using sp19team23finalproject.Controllers
+@{
+    ViewBag.Title = "Detailed Search";
+}
+
+<h2>Detailed Search</h2>
+<form asp-action="DisplaySearchResults" asp-controller="Home" method="get">
+    <div class="form-group">
+        <label>Search Student Names:</label>
+        <input name="SearchName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Minimum GPA:</label>
+        <input name="SearchGPA" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Search Majors:</label>
+        @Html.ListBox("SelectedMajors", (SelectList)ViewBag.Majors, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Graduating After:</label>
+        <input type="date" name="SearchAGrad" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Graduating Before:</label>
+        <input type="date" name="SearchBGrad" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Filter by Position Type:</label><br />
+        <label class="radio">@Html.RadioButton("PType", PositionDuration.All, true) All Positions</label><br />
+        <label class="radio">@Html.RadioButton("PType", PositionDuration.FT) Full Time Only</label><br />
+        <label class="radio">@Html.RadioButton("PType", PositionDuration.I) Internships Only</label><br />
+    </div>
+
+    <button type="submit" class="btn btn-danger">Search</button>
+
+</form>

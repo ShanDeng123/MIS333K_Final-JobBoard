@@ -1,0 +1,68 @@
+﻿@model sp19team23finalproject.Models.Position
+@using sp19team23finalproject.Models
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Position</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PositionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PositionType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Deadline)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Company.CompanyName)
+        </dd>
+
+    </dl>
+</div>
+<h5>Majors for this Position</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Major</th>
+    </tr>
+    @foreach (PositionMajor pm in Model.PositionMajors)
+    {
+        <tr>
+            <td>@pm.Major.MajorName</td>
+        </tr>
+    }
+</table>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PositionID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
